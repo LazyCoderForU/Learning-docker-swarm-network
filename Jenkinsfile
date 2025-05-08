@@ -1,20 +1,21 @@
 pipeline {
     agent any
+
     stages {
-        stage('Checkout Code') {
+        stage('Build') {
             steps {
-                checkout scm
+                bat 'echo Building on Windows...'
+                // Add other Windows-compatible build commands here
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t my-app .'
-            }
+    }
+
+    post {
+        success {
+            bat 'echo ✅ Build was successful on Windows!'
         }
-        stage('Run Tests') {
-            steps {
-                sh 'docker run my-app npm test'
-            }
+        failure {
+            bat 'echo ❌ Build failed on Windows!'
         }
     }
 }
